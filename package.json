@@ -1,0 +1,8 @@
+{
+  "name": "sampal-app",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve public -l 4321",
+    "deploy": "npx wrangler pages deploy public --project-name sampal-app"
+  }
+}
