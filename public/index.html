@@ -4,136 +4,87 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Sampal — Apps by Shmuel</title>
-  <meta name="description" content="Sampal is the home of every app Shmuel makes. Small, fast, obsessively crafted software." />
-  <meta name="theme-color" content="#07070a" />
+  <meta name="description" content="Sampal is where every app Shmuel builds lives. Ideas in. Apps out." />
+  <meta name="theme-color" content="#F5F3EE" />
   <meta property="og:title" content="Sampal — Apps by Shmuel" />
-  <meta property="og:description" content="Small, fast, obsessively crafted software." />
+  <meta property="og:description" content="Ideas in. Apps out." />
   <meta property="og:url" content="https://sampal.app" />
   <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
   <script type="module" src="/main.js"></script>
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
-
-  <!-- Intro curtain -->
-  <div class="curtain" aria-hidden="true">
-    <div class="curtain-mark"><span>S</span></div>
-    <div class="curtain-count"><span data-count>0</span></div>
-  </div>
-
   <header class="nav">
-    <a href="#top" class="logo" data-magnetic aria-label="Sampal home">
-      <span class="logo-mark">S</span><span class="logo-word" data-brand>Sampal</span>
-    </a>
+    <a href="#top" class="logo" aria-label="Sampal home" data-brand>Sampal</a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#apps" data-hover>Apps</a>
-      <a href="#about" data-hover>About</a>
-      <a href="#contact" data-hover>Contact</a>
+      <a href="#apps">Apps</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="pill">Say hi</a>
     </nav>
-    <button class="kbd-btn" data-palette-open data-magnetic aria-label="Open command menu">
-      <span class="kbd-label">Jump to</span><kbd data-mod>⌘</kbd><kbd>K</kbd>
-    </button>
   </header>
 
   <main id="top">
-    <!-- HERO -->
     <section class="hero">
-      <canvas class="aurora" aria-hidden="true"></canvas>
-      <div class="hero-fade" aria-hidden="true"></div>
+      <div class="stickers" data-stickers aria-hidden="true"></div>
       <div class="hero-inner">
-        <p class="eyebrow reveal"><span class="pulse"></span>An app studio by <span data-owner>Shmuel</span> · Est. 2026</p>
-        <h1 class="hero-title" aria-label="I make small apps that feel inevitable.">
-          <span class="line"><span class="split">I make small apps</span></span>
-          <span class="line"><span class="split">that feel <em class="serif shimmer">inevitable.</em></span></span>
+        <h1 class="hero-title">
+          <span class="line"><span class="rise">Ideas in.</span></span>
+          <span class="line"><span class="rise">Apps <mark>out.</mark></span></span>
         </h1>
-        <p class="hero-sub reveal">Sampal is where everything I build lives. Each app does one thing, does it beautifully, and gets out of your way.</p>
-        <div class="hero-cta reveal">
-          <a href="#apps" class="btn btn-primary" data-magnetic><span>Explore the apps</span><i class="arrow">→</i></a>
-          <a href="#about" class="btn btn-ghost" data-magnetic><span>Who's behind this</span></a>
+        <div class="hero-bottom">
+          <p class="hero-sub rise-soft">I'm <span data-owner>Shmuel</span>. I build apps that are fast, useful, and a little bit fun. Every one of them lives right here.</p>
+          <div class="hero-cta rise-soft">
+            <a href="#apps" class="btn btn-dark">See the apps <i>↓</i></a>
+            <a href="#contact" class="btn btn-line">Say hi</a>
+          </div>
         </div>
       </div>
-      <div class="hero-meta reveal">
-        <div><span class="meta-k">Shipped</span><span class="meta-v" data-stat="live">0</span></div>
-        <div><span class="meta-k">In the workshop</span><span class="meta-v" data-stat="soon">0</span></div>
-        <div><span class="meta-k">Local time</span><span class="meta-v" data-clock>--:--</span></div>
-      </div>
-      <a href="#apps" class="scroll-hint" aria-label="Scroll to apps"><span></span></a>
+      <p class="drag-hint rise-soft" aria-hidden="true">↖ go on, throw them around</p>
     </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee" aria-hidden="true"><div class="marquee-track" data-marquee></div></div>
+    <div class="band" aria-hidden="true"><div class="band-track" data-band></div></div>
 
-    <!-- APPS -->
     <section id="apps" class="section">
       <div class="section-head">
-        <p class="kicker reveal">01 — The collection</p>
-        <h2 class="h2 reveal">Built with care.<br /><span class="serif muted">Shipped with intent.</span></h2>
+        <h2 class="h2 reveal">The lineup</h2>
+        <p class="count reveal" data-count></p>
       </div>
       <div class="apps" data-apps></div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="section about">
-      <p class="kicker reveal">02 — The maker</p>
-      <p class="manifesto" data-manifesto>
-        Hi, I'm <span data-owner>Shmuel</span>. I build software for real problems I run into — then sand it down until it feels effortless. No bloat, no dark patterns, no feature for the sake of a feature. Just tools that respect your time and quietly make the day better.
-      </p>
-      <div class="principles">
-        <article class="principle reveal" data-spotlight>
-          <span class="p-num">i.</span>
-          <h3>Obsessive about detail</h3>
-          <p>The last 10% is the whole job. Every pixel, transition and empty state gets attention.</p>
-        </article>
-        <article class="principle reveal" data-spotlight>
-          <span class="p-num">ii.</span>
-          <h3>Fast by default</h3>
-          <p>If it isn't instant, it isn't done. Speed is a feature you feel on every click.</p>
-        </article>
-        <article class="principle reveal" data-spotlight>
-          <span class="p-num">iii.</span>
-          <h3>Small on purpose</h3>
-          <p>One job, done exceptionally well. Focus beats a long feature list every time.</p>
-        </article>
+      <div class="about-grid">
+        <div class="avatar reveal" data-avatar aria-hidden="true">S</div>
+        <div>
+          <h2 class="h2 reveal">Hey, I'm <span data-owner>Shmuel</span>.</h2>
+          <p class="about-text reveal">When something in my day is slow, annoying, or just <em>should exist</em> — I build an app for it. Some are for my team, some are for everyone. All of them end up here.</p>
+        </div>
       </div>
+      <dl class="facts">
+        <div class="reveal"><dt>Now building</dt><dd data-now></dd></div>
+        <div class="reveal"><dt>Based in</dt><dd data-city></dd></div>
+        <div class="reveal"><dt>Local time</dt><dd data-clock>--:--</dd></div>
+      </dl>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <p class="kicker reveal">03 — Say hello</p>
-      <h2 class="contact-title reveal">Have an idea, a bug,<br />or just a <em class="serif">kind word?</em></h2>
-      <button class="email" data-copy-email data-magnetic>
-        <span class="email-text" data-email>hello@sampal.app</span>
-        <span class="email-hint" data-email-hint>Click to copy</span>
-      </button>
-      <div class="socials" data-socials></div>
+    <section id="contact" class="contact">
+      <div class="contact-inner">
+        <h2 class="contact-title reveal">Got an idea?<br />Let's <mark>build it.</mark></h2>
+        <button class="email reveal" data-copy-email>
+          <span data-email></span><span class="email-hint" data-email-hint>tap to copy</span>
+        </button>
+        <div class="socials" data-socials></div>
+      </div>
+      <footer class="footer">
+        <span>© <span data-year></span> <span data-brand>Sampal</span></span>
+        <span>Made in <span data-city></span></span>
+      </footer>
     </section>
   </main>
-
-  <footer class="footer">
-    <span>© <span data-year></span> <span data-brand>Sampal</span>. Made by hand in <span data-city>New York</span>.</span>
-    <span class="footer-right">Press <kbd data-mod>⌘</kbd><kbd>K</kbd> anywhere</span>
-  </footer>
-
-  <!-- App detail sheet -->
-  <dialog class="sheet" data-sheet aria-labelledby="sheet-title">
-    <div class="sheet-inner" data-sheet-body></div>
-  </dialog>
-
-  <!-- Command palette -->
-  <dialog class="palette" data-palette aria-label="Command menu">
-    <div class="palette-box">
-      <input class="palette-input" data-palette-input type="text" placeholder="Search apps, sections, actions…" autocomplete="off" spellcheck="false" />
-      <ul class="palette-list" data-palette-list role="listbox"></ul>
-      <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
-    </div>
-  </dialog>
 
   <div class="toast" data-toast role="status" aria-live="polite"></div>
 </body>
