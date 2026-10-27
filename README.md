@@ -1,6 +1,6 @@
 # sampal.app
 
-The home page for every app Shmuel makes. Static site — no build step — hosted on Cloudflare Pages.
+The home page for every app Sam makes. Static site — no build step — hosted on Cloudflare Pages.
 
 ## Add a new app
 

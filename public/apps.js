@@ -8,14 +8,14 @@
 
 export const site = {
   brand: "Sampal",
-  owner: "Shmuel",
+  owner: "Sam",
   email: "hello@sampal.app", // TODO: confirm the public contact address
   city: "Miami",
   region: "FL",
   timezone: "America/New_York",
   coords: { lat: 25.7617, lon: -80.1918 }, // for the live temperature
   photo: null, // e.g. "/me.jpg" — shows on the polaroid in the About section
-  socials: [{ label: "GitHub", href: "https://github.com/shmuel-usa" }],
+  socials: [], // e.g. { label: "X", href: "https://x.com/…" }
 };
 
 // status: "live" | "beta"
