@@ -33,6 +33,7 @@
     <!-- MORNING -->
     <section class="hero">
       <div class="sun" data-sun aria-hidden="true"></div>
+      <button class="sun-hint" data-sun-hint>tap the sun! <span aria-hidden="true">☀️</span></button>
       <svg class="birds" viewBox="0 0 300 120" aria-hidden="true">
         <path class="bird" d="M10 40 q10 -10 20 0 q10 -10 20 0" />
         <path class="bird b2" d="M90 20 q7 -7 14 0 q7 -7 14 0" />
@@ -57,7 +58,7 @@
       <div class="swell-head">
         <p class="script">the swell</p>
         <h2 class="h2">Every app I've shipped,<br />one wave at a time.</h2>
-        <p class="swell-sub">Scroll to ride it.</p>
+        <p class="swell-sub">Scroll to ride it. Tap the board for a trick. 🏄</p>
       </div>
       <div class="route" data-route>
         <svg class="route-svg" data-route-svg aria-hidden="true">
@@ -153,7 +154,7 @@
       <div class="sec-head">
         <p class="script dark">the boardwalk</p>
         <h2 class="h2" id="play-title">Keep it up!</h2>
-        <p class="sec-sub">Tap the beach ball. Don't let it hit the sand.</p>
+        <p class="sec-sub">Tap anywhere near the beach ball to bop it. Don't let it hit the sand.</p>
       </div>
       <div class="cabinet">
         <p class="marquee">Beach Ball Blitz</p>
@@ -188,6 +189,13 @@
       </footer>
     </section>
   </main>
+
+  <button class="secrets-btn" data-secrets aria-expanded="false" aria-controls="secrets"><span aria-hidden="true">🐚</span> Beach secrets</button>
+  <div class="secrets" id="secrets" data-secrets-panel hidden>
+    <p class="script dark">psst…</p>
+    <h2>Beach secrets</h2>
+    <ul data-secrets-list></ul>
+  </div>
 
   <div class="toast" data-toast role="status" aria-live="polite"></div>
 </body>
