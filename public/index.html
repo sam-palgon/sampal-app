@@ -3,85 +3,121 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Sampal — Apps by Shmuel</title>
-  <meta name="description" content="Sampal is where every app Shmuel builds lives. Ideas in. Apps out." />
-  <meta name="theme-color" content="#F5F3EE" />
-  <meta property="og:title" content="Sampal — Apps by Shmuel" />
-  <meta property="og:description" content="Ideas in. Apps out." />
+  <title>Greetings from Sampal — Apps by Shmuel</title>
+  <meta name="description" content="Little apps, made under the Miami sun by Shmuel." />
+  <meta name="theme-color" content="#FFE3C2" />
+  <meta property="og:title" content="Greetings from Sampal" />
+  <meta property="og:description" content="Little apps, made under the Miami sun." />
   <meta property="og:url" content="https://sampal.app" />
   <meta property="og:type" content="website" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400..700&family=Yellowtail&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
   <script type="module" src="/main.js"></script>
 </head>
 <body>
   <header class="nav">
-    <a href="#top" class="logo" aria-label="Sampal home" data-brand>Sampal</a>
+    <a href="#top" class="logo" data-brand>Sampal</a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#apps">Apps</a>
+      <a href="#apps">The apps</a>
       <a href="#about">About</a>
       <a href="#contact" class="pill">Say hi</a>
     </nav>
   </header>
 
   <main id="top">
+    <!-- MORNING -->
     <section class="hero">
-      <div class="stickers" data-stickers aria-hidden="true"></div>
-      <div class="hero-inner">
-        <h1 class="hero-title">
-          <span class="line"><span class="rise">Ideas in.</span></span>
-          <span class="line"><span class="rise">Apps <mark>out.</mark></span></span>
-        </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub rise-soft">I'm <span data-owner>Shmuel</span>. I build apps that are fast, useful, and a little bit fun. Every one of them lives right here.</p>
-          <div class="hero-cta rise-soft">
-            <a href="#apps" class="btn btn-dark">See the apps <i>↓</i></a>
-            <a href="#contact" class="btn btn-line">Say hi</a>
-          </div>
+      <div class="sun" data-sun aria-hidden="true"></div>
+      <svg class="birds" viewBox="0 0 300 120" aria-hidden="true">
+        <path class="bird" d="M10 40 q10 -10 20 0 q10 -10 20 0" />
+        <path class="bird b2" d="M90 20 q7 -7 14 0 q7 -7 14 0" />
+        <path class="bird b3" d="M150 60 q8 -8 16 0 q8 -8 16 0" />
+      </svg>
+      <div class="palm palm-l" data-palm aria-hidden="true"></div>
+      <div class="palm palm-r" data-palm aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="greet">Greetings from</p>
+        <h1 class="title" data-title aria-label="Sampal">Sampal</h1>
+        <p class="hero-sub">Little apps, made under the <span data-city>Miami</span> sun.<br />By <span data-owner>Shmuel</span>.</p>
+        <a href="#apps" class="paddle">Paddle out <span aria-hidden="true">↓</span></a>
+      </div>
+
+      <div class="sea" aria-hidden="true"><i></i></div>
+    </section>
+
+    <!-- THE SWELL: surf timeline -->
+    <section id="apps" class="swell">
+      <div class="caustics" aria-hidden="true"></div>
+      <div class="swell-head">
+        <p class="script">the swell</p>
+        <h2 class="h2">Every app I've shipped,<br />one wave at a time.</h2>
+        <p class="swell-sub">Scroll to ride it.</p>
+      </div>
+      <div class="route" data-route>
+        <svg class="route-svg" data-route-svg aria-hidden="true">
+          <path class="route-line" data-route-line />
+          <path class="route-wake" data-route-wake />
+        </svg>
+        <div class="surfer" data-surfer aria-hidden="true">
+          <svg viewBox="0 0 120 40">
+            <defs>
+              <linearGradient id="board" x1="0" x2="1">
+                <stop offset="0" stop-color="#FFF4E0" /><stop offset="1" stop-color="#FFE0B8" />
+              </linearGradient>
+            </defs>
+            <path d="M4 20 C 4 8 40 4 80 6 C 104 7 118 14 118 20 C 118 26 104 33 80 34 C 40 36 4 32 4 20 Z" fill="url(#board)" stroke="#0E3B4A" stroke-width="2.5" />
+            <path d="M14 20 L 108 20" stroke="#FF6F59" stroke-width="5" stroke-linecap="round" />
+            <path d="M14 20 L 108 20" stroke="#14B8C4" stroke-width="2" stroke-linecap="round" transform="translate(0 6)" />
+          </svg>
+        </div>
+        <ol class="stops" data-stops></ol>
+      </div>
+      <p class="landfall">Land ho! You made it to shore.</p>
+      <svg class="foam-edge" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 120 10 240 70 360 40 S 600 10 720 40 S 960 70 1080 40 S 1320 10 1440 40 L1440 90 L0 90Z" /></svg>
+    </section>
+
+    <!-- SHORE -->
+    <section id="about" class="sand">
+      <div class="about">
+        <figure class="polaroid" aria-hidden="true">
+          <div class="photo" data-photo></div>
+          <figcaption>me, probably at the beach</figcaption>
+        </figure>
+        <div class="about-copy">
+          <p class="script dark">hey there</p>
+          <h2 class="h2 ink">I'm <span data-owner>Shmuel</span>.</h2>
+          <p class="about-text">I build apps from <span data-city>Miami</span>. When something in my day is slow, annoying, or just <em>should exist</em>, I make an app for it. Some are for my team, some are for everyone. All of them wash up here.</p>
+          <ul class="tickets">
+            <li><span>Home base</span><b><span data-city>Miami</span>, <span data-region>FL</span></b></li>
+            <li><span>Local time</span><b data-clock>--:--</b></li>
+            <li><span>Outside right now</span><b data-weather>Sunny, probably</b></li>
+          </ul>
         </div>
       </div>
-      <p class="drag-hint rise-soft" aria-hidden="true">↖ go on, throw them around</p>
     </section>
 
-    <div class="band" aria-hidden="true"><div class="band-track" data-band></div></div>
-
-    <section id="apps" class="section">
-      <div class="section-head">
-        <h2 class="h2 reveal">The lineup</h2>
-        <p class="count reveal" data-count></p>
-      </div>
-      <div class="apps" data-apps></div>
-    </section>
-
-    <section id="about" class="section about">
-      <div class="about-grid">
-        <div class="avatar reveal" data-avatar aria-hidden="true">S</div>
-        <div>
-          <h2 class="h2 reveal">Hey, I'm <span data-owner>Shmuel</span>.</h2>
-          <p class="about-text reveal">When something in my day is slow, annoying, or just <em>should exist</em> — I build an app for it. Some are for my team, some are for everyone. All of them end up here.</p>
-        </div>
-      </div>
-      <dl class="facts">
-        <div class="reveal"><dt>Now building</dt><dd data-now></dd></div>
-        <div class="reveal"><dt>Based in</dt><dd data-city></dd></div>
-        <div class="reveal"><dt>Local time</dt><dd data-clock>--:--</dd></div>
-      </dl>
-    </section>
-
-    <section id="contact" class="contact">
-      <div class="contact-inner">
-        <h2 class="contact-title reveal">Got an idea?<br />Let's <mark>build it.</mark></h2>
-        <button class="email reveal" data-copy-email>
-          <span data-email></span><span class="email-hint" data-email-hint>tap to copy</span>
+    <!-- SUNSET -->
+    <section id="contact" class="sunset">
+      <div class="contact">
+        <p class="script">wish you were here</p>
+        <h2 class="contact-title">Drop me<br />a line.</h2>
+        <button class="email" data-copy-email>
+          <span data-email></span>
+          <small data-email-hint>tap to copy</small>
         </button>
         <div class="socials" data-socials></div>
       </div>
-      <footer class="footer">
-        <span>© <span data-year></span> <span data-brand>Sampal</span></span>
-        <span>Made in <span data-city></span></span>
+      <div class="horizon" aria-hidden="true">
+        <div class="set-sun"></div>
+        <div class="reflection"></div>
+      </div>
+      <footer class="night">
+        <p class="neon" data-brand>Sampal</p>
+        <p class="foot">© <span data-year></span> · Made in <span data-city>Miami</span> with sunscreen on</p>
       </footer>
     </section>
   </main>

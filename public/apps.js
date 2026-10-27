@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  Everything on the site is driven from this file.
-//  The site itself is black & white — each app brings its own branding.
+//  Apps appear on the surf timeline in the order listed here,
+//  and each postcard wears that app's own branding.
 //  To add an app: copy an object in `apps`, drop its assets in
 //  /public/apps/<id>/, deploy.
 // ─────────────────────────────────────────────────────────────
@@ -9,39 +10,38 @@ export const site = {
   brand: "Sampal",
   owner: "Shmuel",
   email: "hello@sampal.app", // TODO: confirm the public contact address
-  city: "New York",
+  city: "Miami",
+  region: "FL",
   timezone: "America/New_York",
-  nowBuilding: "No. 02",
+  coords: { lat: 25.7617, lon: -80.1918 }, // for the live temperature
+  photo: null, // e.g. "/me.jpg" — shows on the polaroid in the About section
   socials: [{ label: "GitHub", href: "https://github.com/shmuel-usa" }],
 };
 
-// status: "live" | "beta" | "soon"
+// status: "live" | "beta"
 export const apps = [
   {
     id: "window-valet",
     name: "Window Valet",
+    launched: "2026", // shown on the buoy + postmark, e.g. "Mar 2026"
     tagline: "Every window, parked perfectly.", // TODO: real tagline
-    description:
-      "Window Valet takes care of the busywork so you don't have to.", // TODO: real description
+    note: "Built this one so nobody has to babysit the busywork again. Hand it the keys and go enjoy the beach.", // TODO: personal note, written like a postcard
     status: "live",
-    year: 2026,
-    platforms: ["Web"],
     url: "https://windowvalet.sampal.app", // TODO: confirm live URL
     // The app's own identity. Swap these for Window Valet's real brand.
     brand: {
-      bg: "#111111", // card background
-      fg: "#FFFFFF", // text on the card
-      accent: "#FFFFFF", // button colour
-      logo: null, // e.g. "/apps/window-valet/logo.svg" (square app icon)
-      wordmark: null, // e.g. "/apps/window-valet/wordmark.svg" (optional)
+      bg: "#111111", // picture-side background
+      fg: "#FFFFFF", // text on the picture side
+      logo: null, // e.g. "/apps/window-valet/logo.svg" (square app icon — also used as the stamp)
+      wordmark: null, // e.g. "/apps/window-valet/wordmark.svg"
       font: null, // e.g. "Poppins" — any Google Font, used for the app name
       screenshot: null, // e.g. "/apps/window-valet/screen.png" (16:10 works best)
     },
   },
 ];
 
-// Teasers for what's cooking. Delete entries as they ship.
+// Messages in bottles — what's coming next. Delete entries as they ship.
 export const upcoming = [
-  { codename: "No. 02", hint: "For the people who run the place.", progress: 0.6 },
-  { codename: "No. 03", hint: "Tiny tool. Unreasonable polish.", progress: 0.25 },
+  { codename: "No. 02", hint: "For the people who run the place." },
+  { codename: "No. 03", hint: "Tiny tool. Unreasonable polish." },
 ];
