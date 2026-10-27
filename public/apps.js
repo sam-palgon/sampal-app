@@ -9,12 +9,12 @@
 export const site = {
   brand: "Sampal",
   owner: "Sam",
-  email: "hello@sampal.app", // TODO: confirm the public contact address
+  email: "sam@sampal.app",
   city: "Miami",
   region: "FL",
   timezone: "America/New_York",
   coords: { lat: 25.7617, lon: -80.1918 }, // for the live temperature
-  photo: null, // e.g. "/me.jpg" — shows on the polaroid in the About section
+  photo: "/sam.jpg", // shows on the polaroid in the About section
   socials: [], // e.g. { label: "X", href: "https://x.com/…" }
 };
 
