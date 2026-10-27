@@ -45,3 +45,29 @@ export const upcoming = [
   { codename: "No. 02", hint: "For the people who run the place." },
   { codename: "No. 03", hint: "Tiny tool. Unreasonable polish." },
 ];
+
+// The tiki bar chalkboard. In `specials`, {apps} and {bottles} fill in automatically.
+export const tiki = {
+  specials: [
+    { label: "Apps shipped", value: "{apps}" },
+    { label: "Messages in bottles", value: "{bottles}" },
+    { label: "Coffees today", value: "3, probably" },
+    { label: "Bugs squashed", value: "plenty" },
+  ],
+  // The tools I build with, served as drinks. TODO: confirm with Sam
+  toolkit: [
+    { drink: "Swift on the Rocks", note: "native Mac apps" },
+    { drink: "Worker Spritz", note: "Cloudflare Workers" },
+    { drink: "D1 Daiquiri", note: "databases" },
+    { drink: "Stripe Sour", note: "payments" },
+  ],
+};
+
+// The tip jar. `url` is a Stripe Payment Link; while it's null the tag shows "Soon".
+// icon: "parking" | "sunscreen" | "coconut" | "umbrella"
+export const tips = [
+  { icon: "parking", name: "Beach parking", blurb: "An hour at the meter.", price: "$3", url: null },
+  { icon: "sunscreen", name: "Sunscreen", blurb: "SPF 50, reapplied.", price: "$5", url: null },
+  { icon: "coconut", name: "Fresh coconut", blurb: "With a tiny umbrella.", price: "$8", url: null },
+  { icon: "umbrella", name: "Umbrella rental", blurb: "Shade for a whole afternoon.", price: "$15", url: null },
+];

@@ -23,6 +23,8 @@
     <nav class="nav-links" aria-label="Primary">
       <a href="#apps">The apps</a>
       <a href="#about">About</a>
+      <a href="#play">Play</a>
+      <a href="#tips">Tip jar</a>
       <a href="#contact" class="pill">Say hi</a>
     </nav>
   </header>
@@ -98,6 +100,71 @@
           </ul>
         </div>
       </div>
+    </section>
+
+    <!-- LOW TIDE: write in the sand -->
+    <section class="tide" aria-labelledby="tide-title">
+      <div class="sec-head">
+        <p class="script dark">low tide</p>
+        <h2 class="h2" id="tide-title">Leave your mark.</h2>
+        <p class="sec-sub">Draw in the wet sand. The ocean tidies up.</p>
+      </div>
+      <div class="wet" data-wet>
+        <canvas data-sand role="img" aria-label="Wet sand you can draw in"></canvas>
+        <div class="wash" data-wash aria-hidden="true"></div>
+        <button class="wave-btn" data-wave>Send a wave <span aria-hidden="true">🌊</span></button>
+      </div>
+    </section>
+
+    <!-- TIKI BAR: chalkboard + tip jar -->
+    <section id="tiki" class="tiki" aria-labelledby="tiki-title">
+      <div class="thatch" aria-hidden="true"></div>
+      <div class="sec-head">
+        <p class="script dark">the tiki bar</p>
+        <h2 class="h2" id="tiki-title">Pull up a stool.</h2>
+      </div>
+      <div class="tiki-grid">
+        <div class="chalkboard">
+          <h3>Today's specials</h3>
+          <dl class="specials" data-specials></dl>
+          <h3>The toolkit</h3>
+          <ul class="toolkit" data-toolkit></ul>
+        </div>
+        <div id="tips" class="tipjar">
+          <svg class="jar" viewBox="0 0 120 140" aria-hidden="true">
+            <rect x="30" y="8" width="60" height="16" rx="4" fill="#c98b4b" stroke="#0e3b4a" stroke-width="3" />
+            <path d="M34 24 H86 Q104 34 104 60 V116 Q104 132 88 132 H32 Q16 132 16 116 V60 Q16 34 34 24 Z" fill="rgba(170,240,215,.4)" stroke="#0e3b4a" stroke-width="3" />
+            <circle cx="46" cy="112" r="11" fill="#ffc93c" stroke="#0e3b4a" stroke-width="2.5" />
+            <circle cx="72" cy="114" r="10" fill="#ffc93c" stroke="#0e3b4a" stroke-width="2.5" />
+            <rect x="40" y="80" width="40" height="22" rx="3" fill="#9fd9a8" stroke="#0e3b4a" stroke-width="2.5" transform="rotate(-12 60 91)" />
+            <rect x="34" y="52" width="52" height="20" rx="4" fill="#fff8ec" stroke="#0e3b4a" stroke-width="2" />
+            <text x="60" y="66" text-anchor="middle" font-family="Caveat, cursive" font-weight="700" font-size="15" fill="#0e3b4a">TIPS</text>
+            <path d="M26 44 V108" stroke="#fff" stroke-opacity=".7" stroke-width="5" stroke-linecap="round" />
+          </svg>
+          <h3 class="tj-title">Keep <span data-owner>Sam</span> on the beach.</h3>
+          <p class="tj-text">If one of my apps made your day easier, toss something in the jar.</p>
+          <ul class="tags" data-tips></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOARDWALK: arcade -->
+    <section id="play" class="boardwalk" aria-labelledby="play-title">
+      <div class="sec-head">
+        <p class="script dark">the boardwalk</p>
+        <h2 class="h2" id="play-title">Keep it up!</h2>
+        <p class="sec-sub">Tap the beach ball. Don't let it hit the sand.</p>
+      </div>
+      <div class="cabinet">
+        <p class="marquee">Beach Ball Blitz</p>
+        <div class="screen">
+          <canvas data-game aria-label="Beach ball game" role="img"></canvas>
+          <div class="hud"><span>Score <b data-score>0</b></span><span>Best <b data-best>0</b></span></div>
+          <p class="game-msg" data-game-msg>Tap the ball to start</p>
+        </div>
+        <div class="cab-base" aria-hidden="true"><i></i><i></i></div>
+      </div>
+      <div class="planks" aria-hidden="true"></div>
     </section>
 
     <!-- SUNSET -->
