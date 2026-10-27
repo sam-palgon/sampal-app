@@ -1,6 +1,12 @@
 name = "sampal-app"
 compatibility_date = "2026-10-01"
 
+# Cloudflare connects these domains to this Worker on deploy.
+routes = [
+  { pattern = "sampal.app", custom_domain = true },
+  { pattern = "www.sampal.app", custom_domain = true },
+]
+
 # Static site: Cloudflare serves everything in public/ (including _headers and 404.html).
 [assets]
 directory = "./public"
