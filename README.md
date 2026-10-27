@@ -30,11 +30,12 @@ Commit and push — Cloudflare redeploys automatically. Delete its teaser from `
 npm run dev   # http://localhost:4321
 ```
 
-## Deploy (Cloudflare Workers)
+## Deploy (Cloudflare Workers, from your computer)
 
-The `sampal-app` Worker on Cloudflare is connected to this repo and serves `public/` as static assets (see `wrangler.toml`).
+One-time: `npx wrangler login` (opens the browser to authorize your Cloudflare account).
 
-- Push to `main` → deploys to production (sampal.app).
-- Push to any other branch → uploads a preview version.
+Then every release:
 
-Manual deploy: `npm run deploy`.
+```sh
+npm run deploy   # = npx wrangler deploy → uploads public/ to the sampal-app Worker (sampal.app)
+```

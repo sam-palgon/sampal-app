@@ -8,6 +8,11 @@ Sam's personal landing page for every app Sam builds. Static site, no build step
 
 ## Releasing
 
-- Cloudflare Workers Builds deploys `public/` automatically: `main` → production (sampal.app), any other branch → its own preview URL.
-- Workflow: push changes to a branch, share the Cloudflare preview link (from the PR checks), and merge to `main` only when Sam says to ship.
-- Preview locally with `npx serve public` (or `python3 -m http.server -d public`).
+Deploys run locally from Sam's machine with Wrangler (already logged in via `npx wrangler login`).
+
+1. Preview locally: `npm run dev` (http://localhost:4321) and check the change.
+2. Commit and push to `main` so GitHub stays the source of truth.
+3. Deploy: `npm run deploy` (runs `npx wrangler deploy`, uploading `public/` to the `sampal-app` Worker, which serves sampal.app).
+4. Confirm the Wrangler output says it deployed, then open https://sampal.app.
+
+Only deploy when Sam asks to ship.
