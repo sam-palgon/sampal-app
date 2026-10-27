@@ -30,12 +30,11 @@ Commit and push — Cloudflare redeploys automatically. Delete its teaser from `
 npm run dev   # http://localhost:4321
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → pick this repo.
-2. Framework preset: **None**. Build command: *(empty)*. Output directory: **`public`**.
-3. After the first deploy: project → **Custom domains** → add `sampal.app` (and `www.sampal.app`).
-   If `sampal.app` is currently attached to the Window Valet project, remove it there first
-   and give Window Valet a subdomain such as `windowvalet.sampal.app`.
+The `sampal-app` Worker on Cloudflare is connected to this repo and serves `public/` as static assets (see `wrangler.toml`).
 
-Manual deploy without Git: `npm run deploy`.
+- Push to `main` → deploys to production (sampal.app).
+- Push to any other branch → uploads a preview version.
+
+Manual deploy: `npm run deploy`.

@@ -1,3 +1,7 @@
 name = "sampal-app"
-pages_build_output_dir = "public"
 compatibility_date = "2026-10-01"
+
+# Static site: Cloudflare serves everything in public/ (including _headers and 404.html).
+[assets]
+directory = "./public"
+not_found_handling = "404-page"
