@@ -534,6 +534,9 @@ const store = {
   addEventListener("keydown", (e) => { if (e.key === "Escape") open(false); });
   document.addEventListener("click", (e) => { if (!panel.hidden && !e.target.closest("[data-secrets-panel], [data-secrets]")) open(false); });
 
+  // Tuck the shell away while you're playing, so it never sits on the ball.
+  new IntersectionObserver(([e]) => toggle.classList.toggle("tucked", e.isIntersecting && panel.hidden), { threshold: 0.3 }).observe($(".screen"));
+
   // Once per visit, the seagull shows up by itself (mouse users only).
   const seen = () => { try { return sessionStorage.getItem("sampal.gull"); } catch { return "1"; } };
   if (!reduced && matchMedia("(pointer: fine)").matches && !seen()) {

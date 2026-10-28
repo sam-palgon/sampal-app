@@ -292,6 +292,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .secrets-btn { position: fixed; left: 16px; bottom: 16px; z-index: 60; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px; background: var(--navy); color: var(--cream); font-weight: 700; font-size: 15px; box-shadow: 0 4px 0 #082531, 0 10px 24px -8px rgba(14, 59, 74, .5); transition: transform .2s; animation: bob 2.6s ease-in-out infinite; }
 .secrets-btn:hover { transform: rotate(-4deg) scale(1.05); }
+.secrets-btn.tucked { opacity: 0; pointer-events: none; transform: translateY(20px); }
+.secrets-btn { transition: transform .2s, opacity .3s; }
 .secrets { position: fixed; left: 16px; bottom: 72px; z-index: 61; width: min(380px, calc(100vw - 32px)); max-height: calc(100svh - 110px); overflow: auto; padding: 20px 20px 14px; border-radius: 18px; background: var(--cream); color: var(--navy); border: 2px solid var(--navy); box-shadow: 0 24px 50px -16px rgba(14, 59, 74, .55); }
 .secrets[hidden] { display: none; }
 .secrets .script { font-size: 30px; }
@@ -328,7 +330,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes flicker { 0%, 92%, 96%, 100% { opacity: 1; } 94% { opacity: .55; } }
 .foot { position: relative; margin: 14px 0 0; font-size: 14px; opacity: .7; }
 
-.toast { position: fixed; left: 50%; bottom: 24px; z-index: 100; transform: translate(-50%, calc(100% + 40px)); opacity: 0; padding: 12px 22px; border-radius: 999px; background: var(--navy); color: var(--cream); font-weight: 700; transition: transform .5s var(--ease), opacity .3s; pointer-events: none; }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 100; width: max-content; max-width: calc(100vw - 32px); transform: translate(-50%, calc(100% + 40px)); opacity: 0; padding: 12px 22px; border-radius: 999px; background: var(--navy); color: var(--cream); border: 2px solid var(--cream); box-shadow: 0 10px 30px -8px rgba(14, 59, 74, .6); font-weight: 700; font-size: 16px; line-height: 1.3; text-align: center; transition: transform .5s var(--ease), opacity .3s; pointer-events: none; }
 .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 /* ── Responsive ── */
@@ -369,6 +371,68 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .toolkit .dots { display: none; }
   .toolkit small { font-size: 18px; line-height: 1.1; }
   .wave-btn { font-size: 14px; padding: 8px 14px; }
+
+  /* Toast drops in under the nav, clear of the shell button and thumbs. */
+  .toast { top: calc(env(safe-area-inset-top) + 68px); bottom: auto; transform: translate(-50%, -16px); padding: 10px 18px; font-size: 15px; border-radius: 16px; }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* Shell button becomes a small round icon. */
+  .secrets-btn { left: auto; right: 14px; bottom: calc(env(safe-area-inset-bottom) + 14px); width: 48px; height: 48px; padding: 0; justify-content: center; font-size: 22px; animation: none; }
+  .sb-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .secrets { left: 12px; right: 12px; width: auto; bottom: calc(env(safe-area-inset-bottom) + 72px); max-height: calc(100svh - 160px); padding: 16px 16px 8px; }
+  .secrets .script { font-size: 24px; }
+  .secrets h2 { font-size: 24px; margin: 10px 0 6px; }
+  .secrets li { gap: 10px; padding: 8px 0; }
+  .secrets .s-icon { font-size: 22px; }
+  .secrets li b { font-size: 15px; }
+  .secrets li small { font-size: 13px; }
+
+  /* Tighter sections. */
+  .h2 { font-size: 32px; }
+  .script { font-size: 30px; }
+  .sec-sub, .swell-sub { font-size: 20px; margin-top: 8px; }
+  .sun-hint { font-size: 18px; padding: 4px 10px; }
+  .swell { padding-bottom: 110px; }
+  .route { margin-top: 20px; padding: 30px 0 20px; }
+  .stop { padding: 22px 0; }
+  .landfall { font-size: 22px; }
+  .sand { padding: 48px var(--gutter) 64px; }
+  .about { gap: 28px; }
+  .polaroid { max-width: 220px; padding: 12px 12px 46px; }
+  .polaroid figcaption { font-size: 19px; bottom: 10px; }
+  .about-text { margin-top: 14px; font-size: 17px; }
+  .tickets { margin-top: 20px; gap: 8px; }
+  .tickets li { padding: 8px 14px 8px 20px; }
+  .tickets b { font-size: 16px; }
+  .tide { padding-bottom: 56px; }
+  .wet { height: 220px; margin-top: 20px; border-radius: 20px; }
+  .tiki { padding-bottom: 56px; }
+  .thatch { height: 48px; background-size: 90px 48px; margin-bottom: 28px; }
+  .tiki-grid { margin-top: 24px; gap: 40px; }
+  .chalkboard { padding: 20px 18px 22px; border-width: 10px; }
+  .chalkboard h3 { font-size: 30px; }
+  .chalkboard * + h3 { margin-top: 18px; }
+  .specials div, .toolkit li { font-size: 19px; }
+  .toolkit small { font-size: 16px; }
+  .jar { width: 76px; }
+  .tj-title { font-size: 26px; }
+  .tj-text { font-size: 16px; }
+  .tags { margin-top: 28px; gap: 26px 10px; }
+  .tag { padding: 20px 6px 12px; gap: 2px; }
+  .tag svg { width: 38px; height: 38px; }
+  .tag b { font-size: 15px; }
+  .tag small { font-size: 12px; line-height: 1.3; }
+  .tag .price { font-size: 24px; }
+  .tag a, .tag .soon { margin-top: 6px; padding: 6px 14px; font-size: 13px; }
+  .cabinet { margin-top: 20px; padding: 12px 12px 0; border-radius: 22px 22px 8px 8px; }
+  .marquee { margin-bottom: 10px; padding: 8px; font-size: 30px; }
+  .screen { height: clamp(380px, 58svh, 500px); }
+  .cab-base { padding: 10px 0 12px; }
+  .cab-base i { width: 20px; height: 20px; }
+  .planks { height: 44px; }
+  .contact { padding: 64px var(--gutter) 28px; }
+  .contact-title { margin-bottom: 24px; }
+  .night { padding-bottom: calc(env(safe-area-inset-bottom) + 76px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
