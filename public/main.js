@@ -480,8 +480,16 @@ const store = {
   // In-page triggers.
   $("[data-sun]").addEventListener("click", sunset);
   $("[data-sun-hint]").addEventListener("click", sunset);
-  $("[data-title]").addEventListener("click", (e) => { const l = e.target.closest(".l"); if (l) boing(l); });
-  surfer.addEventListener("click", kickflip);
+  // The title sits on top of the sun: a click inside the sun's circle sets the sun, elsewhere it pokes a letter.
+  const onSun = (x, y) => {
+    const r = $("[data-sun]").getBoundingClientRect();
+    return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) <= r.width / 2;
+  };
+  $("[data-title]").addEventListener("click", (e) => {
+    if (!hero.classList.contains("dusk") && onSun(e.clientX, e.clientY)) return sunset();
+    const l = e.target.closest(".l");
+    if (l) boing(l);
+  });  surfer.addEventListener("click", kickflip);
   $(".hero .sea").addEventListener("click", shark);
   $(".swell").addEventListener("click", (e) => { if (!e.target.closest("a, button, .postcard, .note, [data-surfer]")) shark(); });
 
