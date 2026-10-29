@@ -429,6 +429,11 @@ const store = {
     await wait(reduced ? 50 : 700);
   };
 
+  const onSun = (x, y) => {
+    const r = $("[data-sun]").getBoundingClientRect();
+    return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) <= r.width / 2;
+  };
+
   const sunset = () => {
     if (hero.classList.contains("dusk")) return;
     hero.classList.add("dusk");
@@ -447,15 +452,178 @@ const store = {
     say("Kickflip! 🏄");
   };
 
-  const shark = () => {
-    if ($(".shark")) return;
-    const s = document.createElement("div");
-    s.className = "shark";
-    s.innerHTML = `<svg viewBox="0 0 90 50" aria-hidden="true"><path d="M10 46 Q40 40 50 4 Q58 30 84 46 Z" fill="#5b7b8c" stroke="#0e3b4a" stroke-width="3" stroke-linejoin="round"/><path d="M0 46 Q20 40 45 46 T90 46" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`;
-    document.body.append(s);
-    s.addEventListener("animationend", () => s.remove());
-    say("Duh-nuh… duh-nuh… 🦈", 3000);
-  };
+  // The shark lives in the swell: it circles your board, swims to wherever you tap the
+  // water, and if you sit still too long it comes in for a closer look.
+  const shark = (() => {
+    const swell = $(".swell");
+    const route = $("[data-route]");
+    const el = document.createElement("div");
+    el.className = "shark";
+    el.innerHTML = `<div class="fin"><svg viewBox="0 0 90 50" aria-hidden="true"><path d="M8 44 Q34 38 42 4 Q52 30 80 44 Z" fill="#5b7b8c" stroke="#0e3b4a" stroke-width="3" stroke-linejoin="round"/><path d="M30 40 Q38 22 42 8" fill="none" stroke="#7f9cab" stroke-width="3" stroke-linecap="round"/></svg><i class="wake"></i></div>`;
+    swell.append(el);
+    const fin = $(".fin", el);
+    const pos = { x: 0, y: 0 }, vel = { x: 0, y: 0 };
+    let mode = "patrol", goal = null, orbit = Math.random() * 6, last = 0, raf = 0, still = performance.now(), lunged = 0, seen = false;
+
+    const board = () => {
+      const a = surfer.getBoundingClientRect(), b = swell.getBoundingClientRect();
+      return { x: a.left + a.width / 2 - b.left, y: a.top + a.height / 2 - b.top };
+    };
+    const bounds = () => ({ x0: innerWidth < 640 ? 24 : 50, x1: swell.clientWidth - 50, y0: route.offsetTop + 30, y1: swell.clientHeight - 150 });
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const draw = () => {
+      el.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      if (Math.abs(vel.x) > 12) fin.classList.toggle("right", vel.x > 0);
+    };
+    const resurface = () => {
+      const b = board(), k = bounds();
+      pos.x = innerWidth < 640 || Math.random() < 0.5 ? k.x0 : k.x1;
+      pos.y = clamp(b.y + (Math.random() - 0.5) * 400, k.y0, k.y1);
+      vel.x = vel.y = 0;
+      draw();
+      el.classList.remove("under");
+      mode = "patrol";
+    };
+    const dive = () => {
+      mode = "under";
+      lunged = still = performance.now(); // give the board a breather after it goes under
+      el.classList.add("under");
+      setTimeout(resurface, 1800);
+    };
+
+    const step = (t) => {
+      const dt = Math.min(0.05, (t - (last || t)) / 1000);
+      last = t;
+      const b = board(), k = bounds(), small = innerWidth < 640;
+      let target, speed;
+      if (mode === "lure") { target = goal; speed = 260; }
+      else if (mode === "lunge") { target = b; speed = small ? 300 : 380; }
+      else {
+        orbit += dt * 0.6;
+        // On phones the board rides a narrow lane beside the postcards, so the shark
+        // shadows it up and down that lane instead of circling wide.
+        target = small
+          ? { x: b.x + 14 + Math.cos(orbit) * 12, y: b.y + Math.sin(orbit) * 140 }
+          : { x: b.x + Math.cos(orbit) * 140, y: b.y + Math.sin(orbit) * 77 };
+        speed = 0;
+      }
+      if (mode !== "under") {
+        const dx = target.x - pos.x, dy = target.y - pos.y, d = Math.hypot(dx, dy) || 1;
+        if (!speed) speed = clamp(d * 0.9, 50, 420); // cruise when close, hurry when the board runs off
+        const ease = Math.min(1, dt * (mode === "patrol" ? 2 : 4));
+        vel.x += ((dx / d) * speed - vel.x) * ease;
+        vel.y += ((dy / d) * speed - vel.y) * ease;
+        pos.x = clamp(pos.x + vel.x * dt, k.x0, k.x1);
+        pos.y = clamp(pos.y + vel.y * dt, k.y0, k.y1);
+        draw();
+        if (mode === "lure" && d < 20) mode = "patrol";
+        if (mode === "lunge" && d < 34) {
+          surfer.classList.remove("spooked"); void surfer.offsetWidth; surfer.classList.add("spooked");
+          say("Close one! 🦈");
+          dive();
+        }
+        // Sit still on your board for a few seconds and the shark gets curious.
+        if (mode === "patrol" && !reduced && t - still > 6000 && t - lunged > 14000) mode = "lunge";
+      }
+      raf = requestAnimationFrame(step);
+    };
+
+    addEventListener("scroll", () => { still = performance.now(); }, { passive: true });
+    new IntersectionObserver(([e]) => {
+      cancelAnimationFrame(raf); raf = 0; last = 0;
+      if (!e.isIntersecting) return;
+      if (!seen) { seen = true; resurface(); }
+      still = performance.now();
+      raf = requestAnimationFrame(step);
+    }).observe(swell);
+
+    // Tap the water: the shark swims over to see what the fuss is.
+    swell.addEventListener("click", (e) => {
+      if (e.target.closest("a, button, .postcard, .note, .bottle, [data-surfer]")) return;
+      const r = swell.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      // The fin swims under everything, so a boop is any tap close to it.
+      if (mode !== "under" && Math.hypot(x - pos.x, y - (pos.y - 20)) < 50) { say("Boop! 🦈"); return dive(); }
+      const ring = document.createElement("i");
+      ring.className = "lure";
+      ring.style.transform = `translate(${x}px, ${y}px)`;
+      swell.append(ring);
+      ring.addEventListener("animationend", () => ring.remove());
+      if (mode === "under") return;
+      const k = bounds();
+      goal = { x: clamp(x, k.x0, k.x1), y: clamp(y, k.y0, k.y1) };
+      mode = "lure";
+    });
+
+    return { lunge: () => { if (mode !== "under") mode = "lunge"; } };
+  })();
+
+  // Coconuts: tap a palm to shake one loose, and now and then one drops by itself.
+  // They bonk any letter they hit, then splash into the sea and float away.
+  const coconut = (() => {
+    const palms = $$("[data-palm]");
+    const sea = $(".hero .sea");
+    let told = false;
+    const drop = (palm = palms[Math.random() < 0.5 ? 0 : 1]) => {
+      if ($$(".coconut").length > 4) return;
+      palm.classList.remove("shake"); void palm.offsetWidth; palm.classList.add("shake");
+      const h = hero.getBoundingClientRect(), p = palm.getBoundingClientRect();
+      const left = palm.classList.contains("palm-l");
+      const c = document.createElement("i");
+      c.className = "coconut";
+      hero.append(c);
+      const size = c.offsetWidth;
+      const b = { x: left ? Math.max(30, p.left + p.width * 0.1 - h.left) : Math.min(h.width - 30, p.right - p.width * 0.1 - h.left), y: p.top + p.height * 0.13 - h.top, vx: (left ? 1 : -1) * (60 + Math.random() * 160), vy: -80, spin: 0 };
+      const ground = sea.offsetTop + 22;
+      let last = 0, bonked = false;
+      const fall = (t) => {
+        const dt = Math.min(0.05, (t - (last || t)) / 1000);
+        last = t;
+        b.vy += 1500 * dt;
+        b.x += b.vx * dt; b.y += b.vy * dt; b.spin += b.vx * dt * 2;
+        if (!bonked && b.vy > 0) {
+          const hr = hero.getBoundingClientRect();
+          const l = $$("[data-title] .l").find((l) => {
+            const r = l.getBoundingClientRect();
+            const x = b.x + hr.left, y = b.y + hr.top + size / 2;
+            return x > r.left && x < r.right && y > r.top + r.height * 0.2 && y < r.bottom;
+          });
+          if (l) {
+            bonked = true;
+            boing(l);
+            b.vy = -b.vy * 0.45; b.vx = (Math.random() - 0.5) * 320;
+            say("Bonk! 🥥");
+          }
+        }
+        c.style.transform = `translate(${b.x - size / 2}px, ${b.y - size / 2}px) rotate(${b.spin}deg)`;
+        if (b.y < ground) return requestAnimationFrame(fall);
+        // Splash, then bob off with the waves.
+        const s = document.createElement("i");
+        s.className = "splash";
+        s.style.left = `${b.x}px`; s.style.top = `${ground}px`;
+        hero.append(s);
+        s.addEventListener("animationend", () => s.remove());
+        const x = b.x - size / 2, y = ground - size * 0.7;
+        c.animate([
+          { transform: `translate(${x}px, ${y}px) rotate(${b.spin}deg)` },
+          { transform: `translate(${x + 40}px, ${y - 4}px) rotate(${b.spin + 20}deg)`, offset: 0.3 },
+          { transform: `translate(${x + 90}px, ${y + 2}px) rotate(${b.spin + 40}deg)`, offset: 0.7 },
+          { transform: `translate(${x + 130}px, ${y + size}px) rotate(${b.spin + 60}deg)`, opacity: 0 },
+        ], { duration: 6000, easing: "ease-in-out", fill: "forwards" }).finished.then(() => c.remove());
+      };
+      requestAnimationFrame(fall);
+      if (!told) { told = true; say("Heads up! 🥥"); }
+    };
+
+    palms.forEach((palm) => palm.addEventListener("click", (e) => (onSun(e.clientX, e.clientY) ? sunset() : drop(palm))));
+
+    // Every so often a coconut lets go on its own while the morning is on screen.
+    let inView = false;
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; }, { threshold: 0.5 }).observe(hero);
+    const later = () => setTimeout(() => { if (inView && !document.hidden) drop(); later(); }, 9000 + Math.random() * 9000);
+    if (!reduced) later();
+    return drop;
+  })();
 
   let mx = innerWidth / 2, my = innerHeight / 2;
   addEventListener("pointermove", (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
@@ -481,24 +649,12 @@ const store = {
   $("[data-sun]").addEventListener("click", sunset);
   $("[data-sun-hint]").addEventListener("click", sunset);
   // The title sits on top of the sun: a click inside the sun's circle sets the sun, elsewhere it pokes a letter.
-  const onSun = (x, y) => {
-    const r = $("[data-sun]").getBoundingClientRect();
-    return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) <= r.width / 2;
-  };
   $("[data-title]").addEventListener("click", (e) => {
     if (!hero.classList.contains("dusk") && onSun(e.clientX, e.clientY)) return sunset();
     const l = e.target.closest(".l");
     if (l) boing(l);
-  });  surfer.addEventListener("click", kickflip);
-  $(".hero .sea").addEventListener("click", shark);
-  $(".swell").addEventListener("click", (e) => { if (!e.target.closest("a, button, .postcard, .note, [data-surfer]")) shark(); });
-
-  // The shark swims by on its own the first time you paddle out.
-  new IntersectionObserver(([e], io) => {
-    if (!e.isIntersecting) return;
-    io.disconnect();
-    setTimeout(shark, 1800);
-  }, { threshold: 0.25 }).observe($(".swell"));
+  });
+  surfer.addEventListener("click", kickflip);
 
   // Konami code still works for the keyboard crowd.
   {
@@ -506,7 +662,7 @@ const store = {
     let i = 0;
     addEventListener("keydown", (e) => {
       i = e.key === code[i] ? i + 1 : e.key === code[0] ? 1 : 0;
-      if (i === code.length) { i = 0; shark(); }
+      if (i === code.length) { i = 0; goTo(surfer).then(shark.lunge); }
     });
   }
 
@@ -515,7 +671,8 @@ const store = {
     { icon: "☀️", name: "Speed sunset", how: "Tap the sun at the top.", go: async () => { await goTo(hero, "start"); sunset(); } },
     { icon: "🔤", name: "Bouncy letters", how: "Poke any letter in “Sampal”.", go: async () => { await goTo($("[data-title]")); wave(); } },
     { icon: "🏄", name: "Kickflip", how: "Tap the surfboard while you ride.", go: async () => { await goTo(surfer); kickflip(); } },
-    { icon: "🦈", name: "Shark fin", how: "Tap the water anywhere (or type ↑↑↓↓←→←→BA).", go: shark },
+    { icon: "🦈", name: "Shark patrol", how: "It circles your board. Tap the water to lure it, or stop scrolling and see what happens.", go: async () => { await goTo(surfer); shark.lunge(); } },
+    { icon: "🥥", name: "Coconut drop", how: "Tap a palm tree to shake one loose. Aim for the letters.", go: async () => { await goTo(hero, "start"); coconut(); } },
     { icon: "🐦", name: "Cheeky seagull", how: "Hang around a while. Watch your cursor.", go: gull },
     { icon: "🌊", name: "Wipe the sand", how: "Draw at low tide, then send a wave.", go: () => goTo($("[data-wet]")) },
   ];

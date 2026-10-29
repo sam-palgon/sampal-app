@@ -271,7 +271,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .sun-hint { position: absolute; z-index: 3; top: calc(14% - 14px); left: calc(50% + min(13vw, 190px)); padding: 6px 14px; border-radius: 999px; background: var(--cream); color: var(--coral); font-family: var(--hand); font-weight: 700; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; transform: rotate(8deg); box-shadow: 0 4px 0 rgba(14, 59, 74, .2); animation: nudge 1.6s ease-in-out infinite; transition: opacity .4s; }
 .sun-hint::before { content: ""; position: absolute; left: -10px; top: 50%; border: 8px solid transparent; border-right-color: var(--cream); border-left: 0; margin-top: -8px; }
 .hero.dusk .sun-hint { opacity: 0; pointer-events: none; }
-.hero .sea { cursor: pointer; }
 .sun { cursor: pointer; transition: translate 1.8s var(--ease); }
 .hero::after { content: ""; position: absolute; inset: 0; z-index: -3; pointer-events: none; opacity: 0; transition: opacity 1.8s; background: linear-gradient(180deg, #7d3b5c 0%, #e8566b 35%, #ff7a6a 60%, #ffab7c 85%); }
 .hero.dusk::after { opacity: .9; }
@@ -283,12 +282,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .surfer::before { content: ""; position: absolute; inset: -26px -14px; } /* bigger tap target */
 .surfer.flip svg { animation: kickflip .8s var(--ease); }
 @keyframes kickflip { 50% { transform: translateY(-40px) rotate(180deg); } 100% { transform: rotate(360deg); } }
-.gull, .shark { position: fixed; z-index: 90; top: 0; left: 0; pointer-events: none; }
+.gull { position: fixed; z-index: 90; top: 0; left: 0; pointer-events: none; }
 .gull { width: 70px; }
 .gull .grab { opacity: 0; }
 .gull.has-it .grab { opacity: 1; }
 .no-cursor, .no-cursor * { cursor: none !important; }
-.shark { top: auto; bottom: 18px; width: 120px; animation: swim 7s linear forwards; }
 
 .secrets-btn { position: fixed; left: 16px; bottom: 16px; z-index: 60; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px; background: var(--navy); color: var(--cream); font-weight: 700; font-size: 15px; box-shadow: 0 4px 0 #082531, 0 10px 24px -8px rgba(14, 59, 74, .5); transition: transform .2s; animation: bob 2.6s ease-in-out infinite; }
 .secrets-btn:hover { transform: rotate(-4deg) scale(1.05); }
@@ -306,8 +304,28 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .secrets li small { font-size: 14px; opacity: .75; line-height: 1.3; }
 .secrets li button { flex: none; padding: 7px 12px; border-radius: 999px; background: var(--coral); color: var(--cream); font-weight: 700; font-size: 13px; transition: transform .2s; }
 .secrets li button:hover { transform: rotate(-4deg) scale(1.05); }
-@keyframes swim { from { transform: translateX(-120px); } to { transform: translateX(calc(100vw + 40px)); } }
-.shark svg { animation: bob 1.4s ease-in-out infinite; }
+/* The shark lives in the swell, under the postcards, and only ever shows its fin. */
+.shark { position: absolute; z-index: -1; top: 0; left: 0; width: 90px; height: 50px; margin: -46px 0 0 -45px; pointer-events: none; transition: opacity .5s, filter .5s; }
+.shark.under { opacity: 0; filter: blur(3px); pointer-events: none; }
+.shark .fin { position: relative; width: 100%; height: 100%; transition: transform .35s var(--ease); }
+.shark .fin.right { transform: scaleX(-1); }
+.shark svg { width: 100%; height: 100%; animation: bob 1.4s ease-in-out infinite; }
+.shark .wake { position: absolute; left: -10px; right: -10px; bottom: -4px; height: 12px; border-radius: 50%; border-bottom: 4px solid rgba(255, 255, 255, .85); animation: wake 1.4s ease-in-out infinite; }
+@keyframes wake { 50% { transform: scaleX(1.12); opacity: .7; } }
+.lure { position: absolute; z-index: -1; top: 0; left: 0; width: 60px; height: 26px; margin: -13px 0 0 -30px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, .8); pointer-events: none; animation: lure 1s ease-out forwards; }
+@keyframes lure { from { scale: .3; opacity: 1; } to { scale: 2.2; opacity: 0; } }
+.surfer.spooked svg { animation: spooked .7s var(--ease); }
+@keyframes spooked { 30% { transform: translateY(-34px) rotate(-14deg); } 60% { transform: translateY(-10px) rotate(8deg); } }
+
+/* Coconuts shaken loose from the palms. */
+.palm path { pointer-events: visiblePainted; cursor: pointer; }
+.palm.shake svg { animation: shake .5s ease-in-out; }
+@keyframes shake { 25% { rotate: 3deg; } 50% { rotate: -2deg; } 75% { rotate: 1deg; } }
+.palm svg { transform-origin: 8% 10%; }
+.coconut { position: absolute; z-index: 2; top: 0; left: 0; width: 34px; height: 32px; border-radius: 48% 52% 50% 50%; pointer-events: none;
+  background: radial-gradient(circle at 34% 30%, #b07a44 0 12%, #7a4a24 45%, #4e2d14 100%); box-shadow: inset -3px -4px 0 rgba(0, 0, 0, .2), 0 2px 0 #0e3b4a; }
+.coconut::after { content: ""; position: absolute; left: 30%; top: 26%; width: 4px; height: 4px; border-radius: 50%; background: #2c180a; box-shadow: 8px 0 0 #2c180a, 4px 6px 0 #2c180a; }
+.splash { position: absolute; z-index: 2; width: 70px; height: 24px; margin: -12px 0 0 -35px; border-radius: 50%; border: 4px solid #fff; pointer-events: none; animation: lure .8s ease-out forwards; }
 
 /* ── Sunset ── */
 .sunset { position: relative; overflow: hidden; color: var(--cream); background: linear-gradient(180deg, #ffd9ae 0%, #ffd7a8 12%, #ffab7c 34%, #ff7a6a 56%, #e8566b 72%, #7d3b5c 88%, #24324f 100%); }
@@ -371,6 +389,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .toolkit .dots { display: none; }
   .toolkit small { font-size: 18px; line-height: 1.1; }
   .wave-btn { font-size: 14px; padding: 8px 14px; }
+  .shark { width: 70px; height: 39px; margin: -36px 0 0 -35px; }
+  .coconut { width: 26px; height: 25px; }
 
   /* Toast drops in under the nav, clear of the shell button and thumbs. */
   .toast { top: calc(env(safe-area-inset-top) + 68px); bottom: auto; transform: translate(-50%, -16px); padding: 10px 18px; font-size: 15px; border-radius: 16px; }
